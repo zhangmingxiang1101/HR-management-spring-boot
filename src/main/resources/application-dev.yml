@@ -1,0 +1,24 @@
+# 本地开发环境
+server:
+  # 服务端口
+  port: 5000
+
+spring:
+  # mysql数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/hr?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # redis配置
+  redis:
+    database: 0
+    host: 192.168.66.130
+    port: 6379
+    password: 123@456
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
