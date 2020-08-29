@@ -1,5 +1,5 @@
 <h1 align="center">
-  hr-management-spring-boot
+  HR-management-spring-boot
 </h1>
 
 <p align="center">
@@ -9,9 +9,9 @@
 
 ## 简介
 
-### 什么是hr management
+### 什么是HR management
 
-hr-management是一个前后端分离的**人力资源管理系统**。项目实现了常见的企业级应用所涉及到的技术点。
+HR-management是一个前后端分离的**人力资源管理系统**。项目实现了常见的企业级应用所涉及到的技术点。
 
 本项目是 HR management 后端的 java spring-boot 实现，前端实现尚未着手开发。
 
