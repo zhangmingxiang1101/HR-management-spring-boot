@@ -40,6 +40,7 @@ HR management 将提供大量的文档来帮助开发者使用
 
 + Tierney-John
   + 邮箱：<tierney-john@hotmail.com>
++ 张明翔
 
 ## 注意事项
 
