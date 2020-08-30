@@ -1,9 +1,11 @@
 package io.github.hr.common.configuration;
 
 import io.github.hr.model.MenuDO;
+import io.github.hr.model.RoleDO;
 import io.github.hr.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
@@ -25,14 +27,29 @@ public class CustomMetadataSource implements FilterInvocationSecurityMetadataSou
     MenuService menuService;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
+    /**
+     * 首先提取出请求URL，根据请求URL判断该请求需要的角色信息
+     *
+     * @param o
+     * @return 未匹配成功的请求，返回登陆
+     * @throws IllegalArgumentException
+     */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
         List<MenuDO> allMenu = menuService.getAllMenu();
         for (MenuDO menu : allMenu) {
-//            if (antPathMatcher.match());
+            if (antPathMatcher.match(menu.getUrl(), requestUrl) && menu.getRoles().size() > 0) {
+                List<RoleDO> roles = menu.getRoles();
+                int size = roles.size();
+                String[] values = new String[size];
+                for (int i = 0; i < size; i++) {
+                    values[i] = roles.get(i).getName();
+                }
+                return SecurityConfig.createList(values);
+            }
         }
-        return null;
+        return SecurityConfig.createList("ROLE_LOGIN");
     }
 
     @Override
@@ -42,6 +59,6 @@ public class CustomMetadataSource implements FilterInvocationSecurityMetadataSou
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return false;
+        return FilterInvocation.class.isAssignableFrom(aClass);
     }
 }
